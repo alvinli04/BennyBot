@@ -13,6 +13,19 @@ bot = commands.Bot(command_prefix='b!')
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
+@bot.event
+async def on_message(message):
+    if not message.author.bot:
+        msg = message.content
+        msgl = msg.lower()
+        if "im" in msgl:
+            idx = msgl.index("im") + 2
+            await message.channel.send(f"Hi{msg[idx:]}, I'm dad!")
+        elif "i'm" in msgl:
+            idx = msgl.index("i'm") + 3
+            await message.channel.send(f"Hi{msg[idx:]}, I'm dad!")
+    await bot.process_commands(message)
+
 @bot.command(name='dad')
 async def dad(ctx):
     await ctx.send(f"Hi {str(ctx.author)[:-5]}, I'm dad!")
