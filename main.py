@@ -35,7 +35,9 @@ async def praise(ctx):
     words_of_praise = [
             'GAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHH!!!!!!!',
             'DIE DIE DIE DIE DIE!',
-            'I love you.'
+            'I love you.',
+            'AAARGHH!!1!',
+            'BWWWWAAAAAAHH'
     ]
     response = random.choice(words_of_praise)
     await ctx.send(response)
@@ -43,5 +45,28 @@ async def praise(ctx):
 @bot.command(name='flip')
 async def flip(ctx):
     await ctx.send(('Heads.' if random.randint(0,1) else 'Tails.'))
+
+@bot.command(name='maketeams')
+async def maketeams(ctx, n: int, *people):
+    shuffled_people = random.sample(people, len(people))
+    if len(people) < n:
+        await ctx.send('Not enough people!')
+        return
+    chunks = [people[i::n] for i in range(n)]
+    response = ''
+    for i in range(len(chunks)):
+        response += 'Team' + str(i+1) + ': '
+        response += ', '.join(chunks[i])
+        if i < len(chunks)-1:
+            response += '\n'
+    await ctx.send(response)
+
+@bot.command(name='24')
+async def twentyfour(ctx):
+    await ctx.send('24')
+
+@bot.command(name='wordle')
+async def wordle(ctx):
+    await ctx.send('wordle')
 
 bot.run(TOKEN)
