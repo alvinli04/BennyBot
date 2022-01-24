@@ -52,10 +52,10 @@ async def maketeams(ctx, n: int, *people):
     if len(people) < n:
         await ctx.send('Not enough people!')
         return
-    chunks = [people[i::n] for i in range(n)]
+    chunks = [shuffled_people[i::n] for i in range(n)]
     response = ''
     for i in range(len(chunks)):
-        response += 'Team' + str(i+1) + ': '
+        response += 'Team ' + str(i+1) + ': '
         response += ', '.join(chunks[i])
         if i < len(chunks)-1:
             response += '\n'
