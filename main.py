@@ -1,6 +1,7 @@
 import os
 import discord
 import random
+import asyncio
 from dotenv import load_dotenv
 from discord.ext import commands
 
@@ -28,7 +29,7 @@ async def on_message(message):
 
 @bot.command(name='dad')
 async def dad(ctx):
-    await ctx.send(f"Hi {str(ctx.author)[:-5]}, I'm dad!")
+    await ctx.send(f"Hi {str(ctx.author.display_name)}, I'm dad!")
 
 @bot.command(name='praise')
 async def praise(ctx):
@@ -63,10 +64,33 @@ async def maketeams(ctx, n: int, *people):
 
 @bot.command(name='24')
 async def twentyfour(ctx):
-    await ctx.send('24')
+    nums = [random.randint(1,10) for _ in range(4)]
+    await ctx.send("Your numbers are: " + ', '.join([str(i) for i in nums]))
+    
+    chk = lambda m : m.author == ctx.author and m.channel == ctx.channel
+    
+    try:
+        sol = await bot.wait_for("message", check=chk, timeout=40)
+    except asyncio.TimeoutError:
+        await ctx.send(f"Time's up, {ctx.author.display_name}. I'm not waiting 2 years.")
+        return
+
+    def sanitize(s, wl = '0123456789/*+-()'):
+        return ''.join([c for c in s if c in wl])
+
+    sol = sanitize(sol.content)
+    if sorted(nums) == sorted([int(c) for c in sol if c.isnumeric()]) and eval(sol) == 24:
+        await ctx.send(f"Good job, {ctx.author.display_name}. Have a cookie :cookie:")
+    else:
+        await ctx.send(f"{ctx.author.display_name}, that's wrong kid. Don't you know how to count?")
+
 
 @bot.command(name='wordle')
 async def wordle(ctx):
     await ctx.send('wordle')
+
+#########################################################
+# Fas fax commands
+#########################################################
 
 bot.run(TOKEN)
