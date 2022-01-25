@@ -85,7 +85,7 @@ async def twentyfour(ctx):
     if sorted(nums) == sorted([int(c) for c in sol if c.isnumeric()]) and eval(sol) == 24:
         await ctx.send(f"Good job, {ctx.author.display_name}. Have a cookie :cookie:")
     else:
-        await ctx.send(f"{ctx.author.display_name}, that's wrong kid. Don't you know how to count? A possible solutin was " + ans + ".")
+        await ctx.send(f"{ctx.author.display_name}, that's wrong kid. Don't you know how to count? A possible solution was " + ans + ".")
 
 
 @bot.command(name='wordle')
