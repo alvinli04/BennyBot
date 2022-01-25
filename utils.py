@@ -11,24 +11,6 @@ import discord
 from discord.ext import commands
 
 def solve24(digits):
-    """\
-    >>> for digits in '3246 4788 1111 123456 1127 3838'.split():
-            solve(list(digits))
-
-
-    Solution found: 2 + 3 * 6 + 4
-    '2 + 3 * 6 + 4'
-    Solution found: ( 4 + 7 - 8 ) * 8
-    '( 4 + 7 - 8 ) * 8'
-    No solution found for: 1 1 1 1
-    '!'
-    Solution found: 1 + 2 + 3 * ( 4 + 5 ) - 6
-    '1 + 2 + 3 * ( 4 + 5 ) - 6'
-    Solution found: ( 1 + 2 ) * ( 1 + 7 )
-    '( 1 + 2 ) * ( 1 + 7 )'
-    Solution found: 8 / ( 3 - 8 / 3 )
-    '8 / ( 3 - 8 / 3 )'
-    >>> """
     digilen = len(digits)
     # length of an exp without brackets
     exprlen = 2 * digilen - 1
@@ -73,14 +55,18 @@ class FFGame:
         self.teams = teams
         self.scoreboard = defaultdict(lambda:0)
     
-    def score(self, player, correct):
+    def findteam(self, player):
         for i in range(len(self.teams)):
             if player in self.teams[i]:
-                if correct:
-                    self.scoreboard[i] += 2
-                else:
-                    self.scoreboard[i] -= 1
-                break
+                return i
+        return -1
+
+    def score(self, player, correct):
+        k = self.findteam(player)
+        if correct:
+            self.scoreboard[k] += 2
+        else:
+            self.scoreboard[k] -= 1
 
     def get_teams(self):
         return self.teams
