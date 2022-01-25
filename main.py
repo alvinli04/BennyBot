@@ -73,7 +73,7 @@ async def twentyfour(ctx):
     ans = solve24([str(n) for n in nums])
 
     try:
-        sol = await bot.wait_for("message", check=chk, timeout=40)
+        sol = await bot.wait_for("message", check=chk, timeout=80)
     except asyncio.TimeoutError:
         await ctx.send(f"Time's up, {ctx.author.display_name}. I'm not waiting 2 years. A possible solution was " + ans + ".")
         return
