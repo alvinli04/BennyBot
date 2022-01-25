@@ -3,9 +3,12 @@ import os
 import random
 import math
 from itertools import permutations, combinations, product, chain, zip_longest
+from collections import deque, defaultdict
 from pprint import pprint as pp
 from fractions import Fraction as F
 import ast, re, sys
+import discord
+from discord.ext import commands
 
 def solve24(digits):
     """\
@@ -64,8 +67,33 @@ def solve24(digits):
     return 'No solution found.'
 
 
+# Fas Fax stuff
+class FFGame:
+    def __init__(self, teams):
+        self.teams = teams
+        self.scoreboard = defaultdict(lambda:0)
+    
+    def score(self, player, correct):
+        for i in range(len(self.teams)):
+            if player in self.teams[i]:
+                if correct:
+                    self.scoreboard[i] += 2
+                else:
+                    self.scoreboard[i] -= 1
+                break
+
+    def get_teams(self):
+        return self.teams
+    def get_scoreboard(self):
+        return self.scoreboard
+
+
 def main():
-    print(solve24(['3','8','1','1']))
+    teams = [['a', 'b'], ['c','d']]
+    fg = FFGame(teams)
+    fg.score('a', True)
+    print(fg.get_teams())
+    print(fg.get_scoreboard()[0])
 
 if __name__ == '__main__':
     main()
