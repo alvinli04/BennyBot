@@ -99,5 +99,15 @@ async def wordle(ctx):
 #########################################################
 # Fas fax commands
 #########################################################
+@bot.command(name='fasfax')
+async def fasfax(ctx, *args):
+    chk = lambda m : m.channel == ctx.channel
+    while True:
+        resp = await bot.wait_for("message", check=chk, timeout=None)
+        if resp.content == 'stop':
+            return
+        else:
+            await ctx.send(resp.content)
+
 
 bot.run(TOKEN)
