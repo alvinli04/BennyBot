@@ -65,12 +65,16 @@ async def maketeams(ctx, n: int, *people):
 
 @bot.command(name='24')
 async def twentyfour(ctx):
+    
     nums = [random.randint(1,9) for _ in range(4)]
     await ctx.send("Your numbers are: " + ', '.join([str(i) for i in nums]))
     
     chk = lambda m : m.author == ctx.author and m.channel == ctx.channel
-    
+     
     ans = solve24([str(n) for n in nums])
+    while ans == 'No solution found.':
+        nums = [random.randint(1,9) for _ in range(4)]
+        ans = solve24([str(n) for n in nums])
 
     try:
         sol = await bot.wait_for("message", check=chk, timeout=80)
