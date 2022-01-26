@@ -51,6 +51,8 @@ async def flip(ctx):
 @bot.command(name='maketeams')
 async def maketeams(ctx, n: int, *people):
     shuffled_people = random.sample(people, len(people))
+    for i in range(len(shuffled_people)):
+        shuffled_people[i] = shuffled_people[i].replace('"',"")
     if len(people) < n:
         await ctx.send('Not enough people!')
         return
