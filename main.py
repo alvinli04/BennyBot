@@ -99,6 +99,7 @@ async def wordle(ctx):
 #########################################################
 # Fas fax commands
 #########################################################
+
 @bot.command(name='fasfax')
 async def fasfax(ctx, *args):
     chk = lambda m : m.channel == ctx.channel
